@@ -17,4 +17,8 @@ public interface ICartService {
 
 	List<CartModel> gerCartForUser(long id);
 
+	int getCount();
+
+	CartModel updateQuantity(long cartId, int quantity);
+
 }

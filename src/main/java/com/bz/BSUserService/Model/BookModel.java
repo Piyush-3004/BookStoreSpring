@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+
 import com.bz.BSUserService.Dto.BookDto;
 
 import lombok.Data;
@@ -22,8 +24,13 @@ public class BookModel {
 	private String author;
     @Column(name="bookdesc") 
 	private String desc;
-    @Column(name="bookogo") 
-	private String logo;
+   
+    
+    @Lob
+    @Column(name="booklogo") 
+    private byte[] logo;
+
+    
     @Column(name="bookprice") 
 	private Integer price;
     @Column(name="bookquantity") 
@@ -34,7 +41,6 @@ public class BookModel {
 		this.name=bookDto.getName();
 		this.author=bookDto.getAuthor();
 		this.desc=bookDto.getDesc();
-		this.logo=bookDto.getLogo();
 		this.price=bookDto.getPrice();
 		this.quantity=bookDto.getQuantity();
 				

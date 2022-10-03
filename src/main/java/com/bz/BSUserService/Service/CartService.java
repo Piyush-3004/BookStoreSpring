@@ -36,8 +36,8 @@ public class CartService implements ICartService {
 			if (cartDto.getQuantity() < book.get().getQuantity()) {
 				CartModel newCart = new CartModel(cartDto,book.get(),user.get());
 				cartRepo.save(newCart);
-//				book.get().setQuantity(book.get().getQuantity() - cartDto.getQuantity());
-//				bookRepo.save(book.get());
+				book.get().setQuantity(book.get().getQuantity() - cartDto.getQuantity());
+				bookRepo.save(book.get());
 				return newCart;
 			}
 		}
@@ -84,11 +84,28 @@ public class CartService implements ICartService {
 		Optional<UserModel> user = userRepo.findById(id);
 		if (user.isPresent()) {
 			Optional<CartModel> cart = cartRepo.findById(cartId);
-
 			cart.get().setQuantity(quantity);
+			cart.get().setTotalPrice(quantity*cart.get().getBook().getPrice());
+			cartRepo.save(cart.get());
 			return cart.get();
 		}
 		return null;
+	}
+	
+	@Override
+	public CartModel updateQuantity(long cartId, int quantity) {
+			Optional<CartModel> cart = cartRepo.findById(cartId);
+			cart.get().setQuantity(quantity);
+			cart.get().setTotalPrice(quantity*cart.get().getBook().getPrice());
+			cartRepo.save(cart.get());
+			return cart.get();
+	}
+
+	@Override
+	public int getCount() {
+		List list = cartRepo.findAll();
+		int count = list.size();
+		return count;
 	}
 
 }

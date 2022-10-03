@@ -15,5 +15,4 @@ public class OrderDto {
     private Long userID;
     private String email;
     private Long bookID;
-    private boolean cancel;
 }

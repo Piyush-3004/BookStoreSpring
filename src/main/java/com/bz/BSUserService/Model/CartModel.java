@@ -32,7 +32,7 @@ public class CartModel {
 	
 	public CartModel(CartDto cartDto, BookModel bookModel, UserModel userModel) {
 		this.quantity = cartDto.getQuantity();
-		this.totalPrice=cartDto.getTotalPrice();
+		this.totalPrice=cartDto.getQuantity()*bookModel.getPrice();
 		this.book=bookModel;
 		this.user=userModel;
 	}

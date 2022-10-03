@@ -4,19 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.bz.BSUserService.Dto.CartDto;
 import com.bz.BSUserService.Model.CartModel;
 import com.bz.BSUserService.Service.ICartService;
+@CrossOrigin(origins = "http://localhost:3000/")
 
 @RestController
 @RequestMapping("/bookstore/cart")
 public class CartController {
 
 	@Autowired
-	
 	ICartService cartService;
 	
 	@PostMapping("/create")
@@ -25,10 +23,11 @@ public class CartController {
 	}
 	
 	@PutMapping("/updatecart")
-	public CartModel updateCare(@PathVariable Long cartId,@RequestBody CartDto cartDto) {
+	public CartModel updateCart(@PathVariable Long cartId,@RequestBody CartDto cartDto) {
 		return cartService.updateCart(cartId,cartDto);
 	}
-	@DeleteMapping("/delete/{cartId}")
+	
+	@DeleteMapping("/delete/{id}")
 	public CartModel delete(@PathVariable long id){
 		return cartService.delete(id);
 	}
@@ -38,9 +37,18 @@ public class CartController {
 		return cartService.gerCartForUser(id);
 	}
 	
-	@PutMapping("/updatequantity")
-	public CartModel updateQuantity(@RequestHeader String token, @PathVariable long cartId,int quantity) {
-		return cartService.updateQuantity(token,cartId,quantity);
+	@PutMapping("/updatequantity/{cartId}/{quantity}")
+	public CartModel updateQuantity(@PathVariable long cartId,@PathVariable int quantity) {
+		return cartService.updateQuantity(cartId,quantity);
 	}
 	
+//	@PutMapping("/updatequantity/{cartId}/{quantity}")
+//	public CartModel updateQuantity(@RequestHeader String token, @PathVariable long cartId,@PathVariable int quantity) {
+//		return cartService.updateQuantity(token,cartId,quantity);
+//	}
+	
+	@GetMapping("/getcartcount")
+	public int getCount() {
+		return cartService.getCount();
+	}
 }

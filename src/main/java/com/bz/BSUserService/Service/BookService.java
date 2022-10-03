@@ -1,10 +1,12 @@
 package com.bz.BSUserService.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bz.BSUserService.Dto.BookDto;
 import com.bz.BSUserService.Model.BookModel;
@@ -40,7 +42,7 @@ public class BookService implements IBookService{
 		Optional<BookModel> book = bookRepo.findById(id);
 		book.get().setAuthor(bookDto.getAuthor());
 		book.get().setDesc(bookDto.getDesc());
-		book.get().setLogo(bookDto.getLogo());
+//		book.get().setLogo(bookDto.getLogo());
 		book.get().setName(bookDto.getName());
 		book.get().setPrice(bookDto.getPrice());
 		book.get().setQuantity(bookDto.getQuantity());
@@ -79,6 +81,32 @@ public class BookService implements IBookService{
 			return book.get();
 		}
 		return null;
+	}
+
+	@Override
+	public int getBookCount() {
+		List<BookModel> countList = bookRepo.findAll();
+		int count = countList.size();
+		return count;
+	}
+
+	@Override
+	public String setLogo(long bookId, MultipartFile profilePic) throws IOException {
+		
+		Optional<BookModel> book = bookRepo.findById(bookId);
+		if(book.isPresent()) {
+			if(!profilePic.isEmpty()) {
+		try {
+		byte[] byts = profilePic.getBytes();		
+		book.get().setLogo(byts);
+		bookRepo.save(book.get());
+		  } catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }    
+			}
+		}
+		return "image saved";
 	}
 	
 	

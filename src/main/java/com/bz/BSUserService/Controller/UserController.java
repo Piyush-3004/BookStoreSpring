@@ -3,6 +3,7 @@ package com.bz.BSUserService.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ import com.bz.BSUserService.Dto.UserDto;
 import com.bz.BSUserService.Model.UserModel;
 import com.bz.BSUserService.Service.IUserService;
 
-
+@CrossOrigin(origins = "http://localhost:3000/")
 
 @RestController
 @RequestMapping("/bookstore")
